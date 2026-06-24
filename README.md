@@ -23,7 +23,11 @@ After installation, reading pages aloud runs locally.
 
 ## Install
 
-This is the setup a helper does once.
+For a public release, users install the Chrome extension from the Chrome Web Store and then double-click `Install.command` to install the local voice service.
+
+Until the Chrome Web Store listing is live, this repo also supports a local developer install.
+
+### Current Local Install
 
 1. Download this repo.
 2. Double-click `Install.command`.
@@ -33,6 +37,16 @@ This is the setup a helper does once.
 6. Pin **Local Kokoro TTS Reader** from Chrome's extensions menu.
 
 Chrome requires the **Load unpacked** step for local extensions. The installer opens the right folder and page so there is nothing to search for.
+
+### Final Public Install
+
+The final nontechnical install path is:
+
+1. Install the extension from the Chrome Web Store.
+2. Double-click `Install.command` to install the local voice service.
+3. Click the extension on any page and press Play.
+
+The repo includes the extension package, store assets, privacy policy, and checklist needed for Chrome Web Store submission.
 
 ## Everyday Use
 
@@ -95,7 +109,7 @@ No text is sent to a paid API or cloud TTS service by this project.
 
 Chrome does not allow a script to silently install a local unpacked extension. That is why installation has one manual Chrome safety step.
 
-For a truly one-click consumer install, the extension should be published in the Chrome Web Store. This repo is structured so that can be done later without changing the local voice engine.
+For a truly one-click consumer extension install, publish the prepared extension package to the Chrome Web Store.
 
 ## Project Boundary
 
