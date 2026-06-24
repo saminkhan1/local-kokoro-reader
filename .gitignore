@@ -4,5 +4,6 @@ __pycache__/
 downloads/
 logs/
 dist/
+WEB_STORE_URL.txt
 *.wav
 *.mp3

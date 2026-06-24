@@ -8,12 +8,18 @@ SERVER_ARCHIVE="porua_server-${SERVER_VERSION}-macos-arm64.tar.gz"
 SERVER_URL="https://github.com/ShahadIshraq/porua/releases/download/server-${SERVER_VERSION}/porua_server-${SERVER_VERSION}-macos-arm64.tar.gz"
 SERVER_SHA256="495dab24f9051773909cbf847d13abb00607ab9b326825e7c80f6912ec2df06e"
 MODEL_BASE_URL="https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0"
+WEB_STORE_URL="${WEB_STORE_URL:-}"
+LOCAL_EXTENSION_MODE=0
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 INSTALL_ROOT="$HOME/Library/Application Support/LocalKokoroTTS"
 LAUNCH_AGENT="$HOME/Library/LaunchAgents/${SERVICE_LABEL}.plist"
 LOG_DIR="$INSTALL_ROOT/logs"
 EXTENSION_DIR="$INSTALL_ROOT/chrome-extension"
+
+if [[ -z "$WEB_STORE_URL" && -f "$REPO_ROOT/WEB_STORE_URL.txt" ]]; then
+  WEB_STORE_URL="$(tr -d '\r\n' < "$REPO_ROOT/WEB_STORE_URL.txt")"
+fi
 
 info() {
   printf "\033[1;34m%s\033[0m\n" "$1"
@@ -30,6 +36,19 @@ fail() {
 
 need_cmd() {
   command -v "$1" >/dev/null 2>&1 || fail "Missing required command: $1"
+}
+
+parse_args() {
+  for arg in "$@"; do
+    case "$arg" in
+      --local-extension)
+        LOCAL_EXTENSION_MODE=1
+        ;;
+      *)
+        fail "Unknown option: $arg"
+        ;;
+    esac
+  done
 }
 
 check_machine() {
@@ -171,13 +190,29 @@ wait_for_service() {
 }
 
 open_chrome_setup() {
-  open -a "Google Chrome" "chrome://extensions/" || true
-  open "$EXTENSION_DIR" || true
-  osascript <<OSA >/dev/null 2>&1 || true
+  if [[ "$LOCAL_EXTENSION_MODE" == "1" ]]; then
+    open -a "Google Chrome" "chrome://extensions/" || true
+    open "$EXTENSION_DIR" || true
+    osascript <<OSA >/dev/null 2>&1 || true
 display dialog "The local voice is installed and running.\n\nOne Chrome safety step remains:\n1. In Chrome, turn on Developer mode.\n2. Click Load unpacked.\n3. Choose the opened chrome-extension folder.\n\nAfter that, pin Local Kokoro TTS Reader and click it on any page." buttons {"OK"} default button "OK" with title "$APP_NAME"
+OSA
+    return 0
+  fi
+
+  if [[ -n "$WEB_STORE_URL" ]]; then
+    open -a "Google Chrome" "$WEB_STORE_URL" || true
+    osascript <<OSA >/dev/null 2>&1 || true
+display dialog "The local voice is installed and running.\n\nIf Chrome opened the Web Store page, click Add to Chrome.\n\nThen open any page, click Local Kokoro TTS Reader, and press Play." buttons {"OK"} default button "OK" with title "$APP_NAME"
+OSA
+    return 0
+  fi
+
+  osascript <<OSA >/dev/null 2>&1 || true
+display dialog "The local voice is installed and running.\n\nNow install Local Kokoro TTS Reader from the Chrome Web Store.\n\nThen open any page, click the extension, and press Play." buttons {"OK"} default button "OK" with title "$APP_NAME"
 OSA
 }
 
+parse_args "$@"
 need_cmd curl
 need_cmd shasum
 need_cmd tar
@@ -217,4 +252,4 @@ echo "Chrome extension folder:"
 echo "$EXTENSION_DIR"
 echo
 open_chrome_setup
-success "Done. Finish the one Chrome safety step shown on screen."
+success "Done. Open Chrome, click Local Kokoro TTS Reader, and press Play."

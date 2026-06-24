@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Local Kokoro TTS Reader",
-  "version": "1.0",
+  "version": "1.0.1",
   "description": "Reads webpage text aloud using a private local Kokoro voice.",
   "permissions": [
     "activeTab",
