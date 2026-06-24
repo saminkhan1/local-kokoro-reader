@@ -21,7 +21,7 @@ WEB_STORE_URL="https://chromewebstore.google.com/detail/local-kokoro-tts-reader/
 Upload this file to the Chrome Web Store developer dashboard:
 
 ```text
-dist/local-kokoro-reader-extension-v1.0.1.zip
+dist/local-kokoro-reader-extension-v1.0.2.zip
 ```
 
 Use these listing assets:
@@ -36,7 +36,13 @@ dist/store-assets/screenshot-3-local-private.png
 The same assets are also packaged as:
 
 ```text
-dist/local-kokoro-reader-store-assets-v1.0.1.zip
+dist/local-kokoro-reader-store-assets-v1.0.2.zip
+```
+
+Attach this GitHub release file for normal Mac users:
+
+```text
+dist/local-kokoro-reader-mac-installer-v1.0.2.zip
 ```
 
 ## Suggested Listing

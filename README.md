@@ -26,8 +26,13 @@ After installation, reading pages aloud runs locally.
 The public install path is:
 
 1. Install the extension from the Chrome Web Store.
-2. Double-click `Install.command` to install the local voice service.
-3. Click the extension on any page and press Play.
+2. Download `local-kokoro-reader-mac-installer-v*.zip` from the latest GitHub release.
+3. Open the zip and double-click `Install.command` to install the local voice service.
+4. Click the extension on any page and press Play.
+
+For nontechnical users, use the `local-kokoro-reader-mac-installer-v*.zip` release file. It contains a short `Start Here.txt` and only the files needed to install or uninstall the local voice service.
+
+Developer source code is also available in this repo and in the `local-kokoro-reader-v*.zip` release file.
 
 The repo includes the extension package, store assets, privacy policy, and checklist needed for Chrome Web Store submission.
 

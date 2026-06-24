@@ -56,5 +56,9 @@ bash -n "$ROOT/scripts/uninstall-mac.sh"
 bash -n "$ROOT/scripts/package-release.sh"
 bash -n "$ROOT/Install.command"
 bash -n "$ROOT/Uninstall.command"
+[[ -f "$ROOT/README_FIRST.txt" ]] || {
+  echo "README_FIRST.txt is required for the user installer package" >&2
+  exit 1
+}
 
 echo "Checks passed."
