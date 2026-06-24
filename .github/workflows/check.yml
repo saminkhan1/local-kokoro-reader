@@ -1,0 +1,15 @@
+name: Check
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  check:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run checks
+        run: ./scripts/check.sh
